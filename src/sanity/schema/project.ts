@@ -35,15 +35,24 @@ export const project = defineType({
     }),
     defineField({
       name: "image",
-      title: "Cover Image URL",
-      type: "string",
+      title: "Cover Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      description: "Upload a cover image for this project.",
     }),
     defineField({
       name: "images",
       title: "Gallery Images",
       type: "array",
-      of: [{ type: "string" }],
-      description: "List of image URLs or paths for this project.",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
+      description: "Upload gallery images for this project.",
     }),
     defineField({
       name: "link",

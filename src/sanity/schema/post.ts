@@ -35,9 +35,12 @@ export const post = defineType({
     }),
     defineField({
       name: "image",
-      title: "Cover Image URL",
-      type: "string",
-      description: "URL or local path to cover image (e.g. /images/gallery/img-02.jpg)",
+      title: "Cover Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      description: "Upload a cover image for this blog post.",
     }),
     defineField({
       name: "tag",

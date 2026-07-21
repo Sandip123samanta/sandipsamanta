@@ -122,7 +122,9 @@ export async function getSanityProjects(): Promise<PostItem[]> {
           publishedAt: project.publishedAt,
           summary: project.summary,
           image: project.image || "",
-          images: project.images || [],
+          images: project.images
+            ? project.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
+            : [],
           tag: "",
           team: project.team || [],
           link: project.link || "",
@@ -172,7 +174,9 @@ export async function getSanityProject(slug: string): Promise<PostItem | undefin
           publishedAt: project.publishedAt,
           summary: project.summary,
           image: project.image || "",
-          images: project.images || [],
+          images: project.images
+            ? project.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
+            : [],
           tag: "",
           team: project.team || [],
           link: project.link || "",
