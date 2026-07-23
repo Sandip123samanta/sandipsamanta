@@ -26,8 +26,19 @@ const person: Person = {
 
 const newsletter: Newsletter = {
   display: true,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  title: (
+    <>
+      You bring the idea.
+      <br />
+      I’ll build the experience.
+    </>
+  ),
+  description: (
+    <>
+      I design and develop responsive websites that combine thoughtful visuals, smooth interactions,
+      and reliable engineering.
+    </>
+  ),
 };
 
 const social: Social = [

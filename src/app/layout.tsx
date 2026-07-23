@@ -3,6 +3,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "@/resources/custom.css";
 
 import classNames from "classnames";
+import Script from "next/script";
 
 import { Footer, Header, Providers, RouteGuard } from "@/components";
 import { baseURL, dataStyle, effects, fonts, home, person, style } from "@/resources";
@@ -158,12 +159,30 @@ export default async function RootLayout({
           </RevealFx>
           <Flex fillWidth minHeight="16" s={{ hide: true }} />
           <Header />
-          <Flex zIndex={0} fillWidth padding="l" horizontal="center" flex={1}>
+          <Flex
+            zIndex={0}
+            fillWidth
+            padding="l"
+            s={{ style: { paddingLeft: "16px", paddingRight: "16px" } }}
+            horizontal="center"
+            flex={1}
+          >
             <Flex horizontal="center" fillWidth minHeight="0">
               <RouteGuard>{children}</RouteGuard>
             </Flex>
           </Flex>
           <Footer />
+          <Script
+            id="cal-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+                Cal("init", "30min", {origin:"https://app.cal.com"});
+                Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+              `,
+            }}
+          />
         </Column>
       </Providers>
     </Flex>

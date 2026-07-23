@@ -9,12 +9,17 @@ export const ContactForm = () => {
     email: "",
     message: "",
   });
-  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+  const [errors, setErrors] = useState<{
+    name?: string;
+    email?: string;
+    message?: string;
+    submit?: string;
+  }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validate = () => {
-    const newErrors: { name?: string; email?: string; message?: string } = {};
+    const newErrors: { name?: string; email?: string; message?: string; submit?: string } = {};
     if (!formData.name.trim()) newErrors.name = "Name is required.";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
@@ -39,10 +44,45 @@ export const ContactForm = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setErrors((prev) => ({ ...prev, submit: undefined }));
+
+    const apiKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: apiKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `New Portfolio Message from ${formData.name}`,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsSubmitted(true);
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          submit:
+            result.message || "Failed to send message. Please check your Web3Forms access key.",
+        }));
+      }
+    } catch (error) {
+      setErrors((prev) => ({
+        ...prev,
+        submit: "An error occurred while sending your message. Please try again later.",
+      }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -78,24 +118,7 @@ export const ContactForm = () => {
   }
 
   return (
-    <Column
-      as="form"
-      onSubmit={handleSubmit}
-      fillWidth
-      padding="xl"
-      radius="l"
-      border="neutral-alpha-weak"
-      background="surface"
-      style={{ backdropFilter: "blur(10px)" }}
-      gap="24"
-    >
-      <Column gap="8">
-        <Heading variant="display-strong-s">Let's Connect</Heading>
-        <Text variant="body-default-m" onBackground="neutral-weak">
-          Have a question or want to work together? Drop me a message below.
-        </Text>
-      </Column>
-
+    <Column as="form" onSubmit={handleSubmit} fillWidth gap="24">
       <Column gap="16">
         <Input
           id="name"
@@ -129,10 +152,16 @@ export const ContactForm = () => {
           onChange={handleChange}
           error={!!errors.message}
           errorMessage={errors.message}
-          lines={5}
+          lines={6}
           required
         />
       </Column>
+
+      {errors.submit && (
+        <Text variant="body-default-s" onBackground="danger-weak">
+          {errors.submit}
+        </Text>
+      )}
 
       <Button type="submit" fillWidth size="m" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Send Message"}
