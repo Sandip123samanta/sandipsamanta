@@ -1,13 +1,16 @@
 import { ProjectCard } from "@/components";
 import { getSanityProjects } from "@/utils/utils";
 import { Column, Text } from "@once-ui-system/core";
+import { ProjectsClient } from "./ProjectsClient";
 
 interface ProjectsProps {
   range?: [number, number?];
   exclude?: string[];
+  featured?: boolean;
+  paginate?: boolean;
 }
 
-export async function Projects({ range, exclude }: ProjectsProps) {
+export async function Projects({ range, exclude, featured, paginate }: ProjectsProps) {
   let allProjects = await getSanityProjects();
 
   // Exclude by slug (exact match)
@@ -15,13 +18,48 @@ export async function Projects({ range, exclude }: ProjectsProps) {
     allProjects = allProjects.filter((post) => !exclude.includes(post.slug));
   }
 
-  const sortedProjects = allProjects.sort((a, b) => {
-    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
-  });
+  let projectsToDisplay = [...allProjects];
+
+  if (featured) {
+    const featuredProjects = allProjects.filter((project) => project.metadata.featured === true);
+
+    if (featuredProjects.length > 0) {
+      featuredProjects.sort((a, b) => {
+        const orderA = a.metadata.featuredOrder;
+        const orderB = b.metadata.featuredOrder;
+
+        if (orderA !== undefined && orderB !== undefined) {
+          if (orderA !== orderB) return orderA - orderB;
+        } else if (orderA !== undefined) {
+          return -1;
+        } else if (orderB !== undefined) {
+          return 1;
+        }
+
+        return (
+          new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+        );
+      });
+      projectsToDisplay = featuredProjects.slice(0, 3);
+    } else {
+      projectsToDisplay.sort((a, b) => {
+        return (
+          new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+        );
+      });
+      projectsToDisplay = projectsToDisplay.slice(0, 3);
+    }
+  } else {
+    projectsToDisplay.sort((a, b) => {
+      return (
+        new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime()
+      );
+    });
+  }
 
   const displayedProjects = range
-    ? sortedProjects.slice(range[0] - 1, range[1] ?? sortedProjects.length)
-    : sortedProjects;
+    ? projectsToDisplay.slice(range[0] - 1, range[1] ?? projectsToDisplay.length)
+    : projectsToDisplay;
 
   if (displayedProjects.length === 0) {
     return (
@@ -36,6 +74,10 @@ export async function Projects({ range, exclude }: ProjectsProps) {
         <Text variant="body-default-m">No projects available at the moment.</Text>
       </Column>
     );
+  }
+
+  if (paginate) {
+    return <ProjectsClient projects={displayedProjects} itemsPerPage={4} />;
   }
 
   return (

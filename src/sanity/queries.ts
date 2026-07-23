@@ -50,7 +50,9 @@ export const allProjectsQuery = `*[_type == "project"] | order(publishedAt desc)
   link,
   github,
   team,
-  content
+  content,
+  featured,
+  featuredOrder
 }`;
 
 export const singleProjectQuery = `*[_type == "project" && slug.current == $slug][0] {
@@ -67,5 +69,7 @@ export const singleProjectQuery = `*[_type == "project" && slug.current == $slug
   link,
   github,
   team,
-  content
+  content,
+  featured,
+  featuredOrder
 }`;

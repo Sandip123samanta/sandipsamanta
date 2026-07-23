@@ -2,6 +2,8 @@ import { Projects } from "@/components/work/Projects";
 import { about, baseURL, person, work } from "@/resources";
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   return Meta.generate({
     title: work.title,
@@ -31,7 +33,7 @@ export default function Work() {
       <Heading marginBottom="l" variant="heading-strong-xl" align="center">
         {work.title}
       </Heading>
-      <Projects />
+      <Projects paginate />
     </Column>
   );
 }

@@ -33,6 +33,20 @@ export const project = defineType({
       type: "text",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "featured",
+      title: "Featured on Homepage",
+      type: "boolean",
+      description: "Toggle to feature this project on the homepage.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "featuredOrder",
+      title: "Featured Order",
+      type: "number",
+      description:
+        "Order number for featured projects (e.g., 1, 2, 3). Lower numbers appear first.",
+    }),
 
     defineField({
       name: "images",

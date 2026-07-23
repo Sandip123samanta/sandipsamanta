@@ -22,6 +22,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const revalidate = 60;
+
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = await getSanityPosts();
   return posts.map((post) => ({

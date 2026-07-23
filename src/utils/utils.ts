@@ -28,6 +28,8 @@ type Metadata = {
   team: Team[];
   link?: string;
   github?: string;
+  featured?: boolean;
+  featuredOrder?: number;
 };
 
 export type PostItem = {
@@ -88,7 +90,7 @@ export function getPosts(customPath = ["src", "app", "blog", "posts"]): PostItem
 
 export async function getSanityPosts(): Promise<PostItem[]> {
   try {
-    const rawPosts = await client.fetch(allPostsQuery);
+    const rawPosts = await client.fetch(allPostsQuery, {}, { next: { revalidate: 60 } });
     if (rawPosts && rawPosts.length > 0) {
       return rawPosts.map((post: any) => ({
         slug: post.slug,
@@ -115,7 +117,7 @@ export async function getSanityPosts(): Promise<PostItem[]> {
 
 export async function getSanityProjects(): Promise<PostItem[]> {
   try {
-    const rawProjects = await client.fetch(allProjectsQuery);
+    const rawProjects = await client.fetch(allProjectsQuery, {}, { next: { revalidate: 60 } });
     if (rawProjects && rawProjects.length > 0) {
       return rawProjects.map((project: any) => ({
         slug: project.slug,
@@ -131,6 +133,8 @@ export async function getSanityProjects(): Promise<PostItem[]> {
           team: project.team || [],
           link: project.link || "",
           github: project.github || "",
+          featured: project.featured || false,
+          featuredOrder: project.featuredOrder,
         },
       }));
     }
@@ -142,7 +146,7 @@ export async function getSanityProjects(): Promise<PostItem[]> {
 
 export async function getSanityPost(slug: string): Promise<PostItem | undefined> {
   try {
-    const post = await client.fetch(singlePostQuery, { slug });
+    const post = await client.fetch(singlePostQuery, { slug }, { next: { revalidate: 60 } });
     if (post) {
       return {
         slug: post.slug,
@@ -169,7 +173,7 @@ export async function getSanityPost(slug: string): Promise<PostItem | undefined>
 
 export async function getSanityProject(slug: string): Promise<PostItem | undefined> {
   try {
-    const project = await client.fetch(singleProjectQuery, { slug });
+    const project = await client.fetch(singleProjectQuery, { slug }, { next: { revalidate: 60 } });
     if (project) {
       return {
         slug: project.slug,
@@ -185,6 +189,8 @@ export async function getSanityProject(slug: string): Promise<PostItem | undefin
           team: project.team || [],
           link: project.link || "",
           github: project.github || "",
+          featured: project.featured || false,
+          featuredOrder: project.featuredOrder,
         },
       };
     }

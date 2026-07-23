@@ -16,6 +16,8 @@ import {
   Text,
 } from "@once-ui-system/core";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   return Meta.generate({
     title: home.title,
@@ -101,7 +103,7 @@ export default function Home() {
         </Column>
       </Column>
       <RevealFx translateY="16" delay={0.6}>
-        <Projects range={[1, 1]} />
+        <Projects featured range={[1, 1]} />
       </RevealFx>
       {routes["/blog"] && (
         <Column fillWidth gap="24" marginBottom="l">
@@ -123,7 +125,7 @@ export default function Home() {
           </Row>
         </Column>
       )}
-      <Projects range={[2]} />
+      <Projects featured range={[2]} />
       <Mailchimp />
     </Column>
   );
