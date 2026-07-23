@@ -1,7 +1,7 @@
 import { Mailchimp } from "@/components";
 import { Posts } from "@/components/blog/Posts";
 import { baseURL, blog, newsletter, person } from "@/resources";
-import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
+import { Column, Heading, Meta, RevealFx, Schema } from "@once-ui-system/core";
 
 export const revalidate = 60;
 
@@ -31,18 +31,22 @@ export default function Blog() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Heading marginBottom="l" variant="heading-strong-xl" marginLeft="24">
-        {blog.title}
-      </Heading>
-      <Column fillWidth flex={1} gap="40">
-        <Posts range={[1, 1]} thumbnail />
-        <Posts range={[2, 3]} columns="2" thumbnail direction="column" />
-        <Mailchimp marginBottom="l" />
-        <Heading as="h2" variant="heading-strong-xl" marginLeft="l">
-          Earlier posts
+      <RevealFx translateY="4" fillWidth>
+        <Heading marginBottom="l" variant="heading-strong-xl" marginLeft="24">
+          {blog.title}
         </Heading>
-        <Posts range={[4]} columns="2" />
-      </Column>
+      </RevealFx>
+      <RevealFx translateY="8" delay={0.2} fillWidth>
+        <Column fillWidth flex={1} gap="40">
+          <Posts range={[1, 1]} thumbnail />
+          <Posts range={[2, 3]} columns="2" thumbnail direction="column" />
+          <Mailchimp marginBottom="l" />
+          <Heading as="h2" variant="heading-strong-xl" marginLeft="l">
+            Earlier posts
+          </Heading>
+          <Posts range={[4]} columns="2" />
+        </Column>
+      </RevealFx>
     </Column>
   );
 }

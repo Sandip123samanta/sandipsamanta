@@ -107,10 +107,10 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        {person.firstName} is a {person.location.split("/")[1]?.replace("_", " ")}-based{" "}
-        {person.role.toLowerCase()} with a passion for transforming complex challenges into simple,
-        elegant design solutions. Their work spans digital interfaces, interactive experiences, and
-        the convergence of design and technology.
+        I'm {person.location.split("/")[1]?.replace("_", " ")}-based {person.role.toLowerCase()}{" "}
+        with a passion for transforming complex challenges into simple, elegant design solutions. My
+        work spans digital interfaces, interactive experiences, and the convergence of design and
+        technology.
       </>
     ),
   },
@@ -119,32 +119,38 @@ const about: About = {
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "Wefik",
+        timeframe: "2025 – Present",
+        role: "Co-Founder & Full-Stack Developer",
         achievements: [
-          "Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user engagement and 30% faster load times.",
-          "Spearheaded the integration of AI tools into design workflows, enabling designers to iterate 50% faster.",
+          "Co-founded Wefik, a creative web development studio delivering distinctive and responsive digital experiences for businesses, institutions, and events.",
+          "Led projects from concept to deployment, handling frontend development, performance optimization, client collaboration, and technical delivery.",
         ],
         images: [
-          // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
+            src: "/images/projects/wefik-cinematic-hero.png",
+            alt: "Wefik Cinematic Hero",
             width: 16,
             height: 9,
           },
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "Bollywood Bites",
+        timeframe: "2026",
+        role: "Freelance Web Developer",
         achievements: [
-          "Developed a design system that unified the brand across multiple platforms, improving design consistency by 40%.",
-          "Led a cross-functional team to launch a new product line, contributing to a 15% increase in overall company revenue.",
+          "Designed and developed a premium restaurant website featuring online ordering, table reservations, catering, food-truck services, and culinary stories.",
+          "Created an immersive, responsive experience inspired by Indian culture, with interactive menus, performance optimization, and a consistent visual identity.",
         ],
-        images: [],
+        images: [
+          {
+            src: "/images/projects/bollywoodbite.png",
+            alt: "Bollywood Bites Restaurant Website",
+            width: 16,
+            height: 9,
+          },
+        ],
       },
     ],
   },
@@ -153,12 +159,19 @@ const about: About = {
     title: "Studies",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "B.Tech in Computer Science & Engineering",
+        timeframe: "2021–2025",
+        description: <>Guru Nanak Institute Of Technology, Kolkata · CGPA: 9.52</>,
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "Higher Secondary — Science",
+        timeframe: "2019–2021",
+        description: <>Midnapore Collegiate School · WBCHSE · 88%</>,
+      },
+      {
+        name: "Secondary Education",
+        timeframe: "2019",
+        description: <>Kerur High School · WBBSE · 90.85%</>,
       },
     ],
   },
@@ -167,8 +180,75 @@ const about: About = {
     title: "Technical skills",
     skills: [
       {
+        title: "Full Stack web development",
+        description: (
+          <>
+            Building modern, high-performance web applications with structured content
+            architectures.
+          </>
+        ),
+        tags: [
+          {
+            name: "Next.js",
+            icon: "nextjs",
+          },
+          {
+            name: "Sanity",
+            icon: "sanity",
+          },
+          {
+            name: "React",
+            icon: "react",
+          },
+          {
+            name: "Git",
+            icon: "git",
+          },
+        ],
+        // optional: leave the array empty if you don't want to display images
+        images: [
+          {
+            src: "/images/projects/storyfinder.png",
+            alt: "Storyfinder Project Image",
+            width: 16,
+            height: 9,
+          },
+          {
+            src: "/images/projects/techverse-cinematic-hero.png",
+            alt: "Techverse Cinematic Hero",
+            width: 16,
+            height: 9,
+          },
+        ],
+      },
+      {
+        title: "Languages known",
+        description: (
+          <>Strong foundational knowledge in software design and general programming paradigms.</>
+        ),
+        tags: [
+          {
+            name: "C",
+            icon: "c",
+          },
+          {
+            name: "JAVA",
+            icon: "java",
+          },
+          {
+            name: "Python",
+            icon: "python",
+          },
+          {
+            name: "JavaScript",
+            icon: "javascript",
+          },
+        ],
+        images: [],
+      },
+      {
         title: "Figma",
-        description: <>Able to prototype in Figma with Once UI with unnatural speed.</>,
+        description: <>Decent foundation in figma.</>,
         tags: [
           {
             name: "Figma",
@@ -178,41 +258,8 @@ const about: About = {
         // optional: leave the array empty if you don't want to display images
         images: [
           {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
-      },
-      {
-        title: "Next.js",
-        description: <>Building next gen apps with Next.js + Once UI + Supabase.</>,
-        tags: [
-          {
-            name: "JavaScript",
-            icon: "javascript",
-          },
-          {
-            name: "Next.js",
-            icon: "nextjs",
-          },
-          {
-            name: "Supabase",
-            icon: "supabase",
-          },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
+            src: "/images/projects/figma.png",
+            alt: "Figma Design Image",
             width: 16,
             height: 9,
           },

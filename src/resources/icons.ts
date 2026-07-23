@@ -22,13 +22,24 @@ import {
   PiUserCircleDuotone,
 } from "react-icons/pi";
 
-import { SiFigma, SiJavascript, SiNextdotjs, SiSupabase } from "react-icons/si";
+import {
+  SiC,
+  SiFigma,
+  SiGit,
+  SiJavascript,
+  SiNextdotjs,
+  SiPython,
+  SiReact,
+  SiSanity,
+  SiSupabase,
+} from "react-icons/si";
 
 import {
   FaDiscord,
   FaFacebook,
   FaGithub,
   FaInstagram,
+  FaJava,
   FaLinkedin,
   FaPinterest,
   FaReddit,
@@ -66,6 +77,12 @@ export const iconLibrary: Record<string, IconType> = {
   nextjs: SiNextdotjs,
   supabase: SiSupabase,
   figma: SiFigma,
+  sanity: SiSanity,
+  react: SiReact,
+  git: SiGit,
+  c: SiC,
+  java: FaJava,
+  python: SiPython,
   facebook: FaFacebook,
   pinterest: FaPinterest,
   whatsapp: FaWhatsapp,

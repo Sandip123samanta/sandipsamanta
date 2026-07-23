@@ -13,6 +13,7 @@ import {
   Line,
   Media,
   Meta,
+  RevealFx,
   Row,
   Schema,
   SmartLink,
@@ -94,52 +95,60 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               image: `${baseURL}${person.avatar}`,
             }}
           />
-          <Column maxWidth="s" gap="16" horizontal="center" align="center">
-            <SmartLink href="/blog">
-              <Text variant="label-strong-m">Blog</Text>
-            </SmartLink>
-            <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
-              {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-            </Text>
-            <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-            {post.metadata.subtitle && (
-              <Text
-                variant="body-default-l"
-                onBackground="neutral-weak"
-                align="center"
-                style={{ fontStyle: "italic" }}
-              >
-                {post.metadata.subtitle}
+          <RevealFx translateY="4" fillWidth horizontal="center">
+            <Column maxWidth="s" gap="16" horizontal="center" align="center">
+              <SmartLink href="/blog">
+                <Text variant="label-strong-m">Blog</Text>
+              </SmartLink>
+              <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
+                {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
               </Text>
-            )}
-          </Column>
-          <Row marginBottom="32" horizontal="center">
-            <Row gap="16" vertical="center">
-              <Avatar size="s" src={person.avatar} />
-              <Text variant="label-default-m" onBackground="brand-weak">
-                {person.name}
-              </Text>
+              <Heading variant="display-strong-m">{post.metadata.title}</Heading>
+              {post.metadata.subtitle && (
+                <Text
+                  variant="body-default-l"
+                  onBackground="neutral-weak"
+                  align="center"
+                  style={{ fontStyle: "italic" }}
+                >
+                  {post.metadata.subtitle}
+                </Text>
+              )}
+            </Column>
+          </RevealFx>
+          <RevealFx translateY="8" delay={0.15} fillWidth horizontal="center">
+            <Row marginBottom="32" horizontal="center">
+              <Row gap="16" vertical="center">
+                <Avatar size="s" src={person.avatar} />
+                <Text variant="label-default-m" onBackground="brand-weak">
+                  {person.name}
+                </Text>
+              </Row>
             </Row>
-          </Row>
+          </RevealFx>
           {post.metadata.image && (
-            <Media
-              src={post.metadata.image}
-              alt={post.metadata.title}
-              aspectRatio="16/9"
-              priority
-              sizes="(min-width: 768px) 100vw, 768px"
-              border="neutral-alpha-weak"
-              radius="l"
-              marginTop="12"
-              marginBottom="8"
-            />
+            <RevealFx translateY="8" delay={0.3} fillWidth>
+              <Media
+                src={post.metadata.image}
+                alt={post.metadata.title}
+                aspectRatio="16/9"
+                priority
+                sizes="(min-width: 768px) 100vw, 768px"
+                border="neutral-alpha-weak"
+                radius="l"
+                marginTop="12"
+                marginBottom="8"
+              />
+            </RevealFx>
           )}
-          <Column as="article" maxWidth="s">
-            <CustomMDX
-              source={post.content ? post.content.replace(/\\`/g, "`") : ""}
-              images={post.metadata.images}
-            />
-          </Column>
+          <RevealFx translateY="12" delay={0.45} fillWidth>
+            <Column as="article" maxWidth="s">
+              <CustomMDX
+                source={post.content ? post.content.replace(/\\`/g, "`") : ""}
+                images={post.metadata.images}
+              />
+            </Column>
+          </RevealFx>
 
           <ShareSection title={post.metadata.title} url={`${baseURL}${blog.path}/${post.slug}`} />
 

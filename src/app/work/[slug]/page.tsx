@@ -13,6 +13,7 @@ import {
   Line,
   Media,
   Meta,
+  RevealFx,
   Row,
   Schema,
   SmartLink,
@@ -94,38 +95,52 @@ export default async function Project({
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column maxWidth="s" gap="16" horizontal="center" align="center">
-        <SmartLink href="/work">
-          <Text variant="label-strong-m">Projects</Text>
-        </SmartLink>
-        <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
-          {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-        </Text>
-        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-      </Column>
-      <Row marginBottom="32" horizontal="center">
-        <Row gap="16" vertical="center">
-          {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
-          <Text variant="label-default-m" onBackground="brand-weak">
-            {post.metadata.team?.map((member, idx) => (
-              <span key={idx}>
-                {idx > 0 && (
-                  <Text as="span" onBackground="neutral-weak">
-                    ,{" "}
-                  </Text>
-                )}
-                <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-              </span>
-            ))}
+      <RevealFx translateY="4" fillWidth horizontal="center">
+        <Column maxWidth="s" gap="16" horizontal="center" align="center">
+          <SmartLink href="/work">
+            <Text variant="label-strong-m">Projects</Text>
+          </SmartLink>
+          <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
+            {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
           </Text>
+          <Heading variant="display-strong-m">{post.metadata.title}</Heading>
+        </Column>
+      </RevealFx>
+      <RevealFx translateY="8" delay={0.15} fillWidth horizontal="center">
+        <Row marginBottom="32" horizontal="center">
+          <Row gap="16" vertical="center">
+            {post.metadata.team && <AvatarGroup reverse avatars={avatars} size="s" />}
+            <Text variant="label-default-m" onBackground="brand-weak">
+              {post.metadata.team?.map((member, idx) => (
+                <span key={idx}>
+                  {idx > 0 && (
+                    <Text as="span" onBackground="neutral-weak">
+                      ,{" "}
+                    </Text>
+                  )}
+                  <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
+                </span>
+              ))}
+            </Text>
+          </Row>
         </Row>
-      </Row>
+      </RevealFx>
       {post.metadata.images.length > 0 && (
-        <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
+        <RevealFx translateY="8" delay={0.3} fillWidth>
+          <Media
+            priority
+            aspectRatio="16 / 9"
+            radius="m"
+            alt="image"
+            src={post.metadata.images[0]}
+          />
+        </RevealFx>
       )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <CustomMDX source={post.content} />
-      </Column>
+      <RevealFx translateY="12" delay={0.45} fillWidth>
+        <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
+          <CustomMDX source={post.content} />
+        </Column>
+      </RevealFx>
       <Column fillWidth gap="40" horizontal="center" marginTop="40">
         <Line maxWidth="40" />
         <Heading as="h2" variant="heading-strong-xl" marginBottom="24">

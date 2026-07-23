@@ -1,6 +1,6 @@
 import { ContactForm } from "@/components";
 import { baseURL, contact, person } from "@/resources";
-import { Flex, Meta, Schema } from "@once-ui-system/core";
+import { Flex, Meta, RevealFx, Schema } from "@once-ui-system/core";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -28,7 +28,9 @@ export default function ContactPage() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <ContactForm />
+      <RevealFx translateY="4" fillWidth>
+        <ContactForm />
+      </RevealFx>
     </Flex>
   );
 }

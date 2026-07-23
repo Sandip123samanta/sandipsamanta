@@ -10,11 +10,14 @@ import {
   IconButton,
   Media,
   Meta,
+  RevealFx,
   Row,
   Schema,
   Tag,
   Text,
+  Timeline,
 } from "@once-ui-system/core";
+import Script from "next/script";
 import React from "react";
 
 export async function generateMetadata() {
@@ -79,7 +82,9 @@ export default function About() {
       )}
       <Row fillWidth s={{ direction: "column" }} horizontal="center">
         {about.avatar.display && (
-          <Column
+          <RevealFx
+            direction="column"
+            translateY="4"
             className={styles.avatar}
             top="64"
             fitHeight
@@ -107,9 +112,16 @@ export default function About() {
                 ))}
               </Row>
             )}
-          </Column>
+          </RevealFx>
         )}
-        <Column className={styles.blockAlign} flex={9} maxWidth={40}>
+        <RevealFx
+          direction="column"
+          translateY="8"
+          delay={0.2}
+          className={styles.blockAlign}
+          flex={9}
+          maxWidth={40}
+        >
           <Column
             id={about.intro.title}
             fillWidth
@@ -119,6 +131,9 @@ export default function About() {
           >
             {about.calendar.display && (
               <Row
+                data-cal-namespace="30min"
+                data-cal-link="sandip-samanta-m7zs9y/30min"
+                data-cal-config='{"layout":"month_view"}'
                 fitWidth
                 border="brand-alpha-medium"
                 background="brand-alpha-weak"
@@ -129,13 +144,16 @@ export default function About() {
                 vertical="center"
                 className={styles.blockAlign}
                 style={{
+                  cursor: "pointer",
                   backdropFilter: "blur(var(--static-space-1))",
                 }}
               >
                 <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
                 <Row paddingX="8">Schedule a call</Row>
                 <IconButton
-                  href={about.calendar.link}
+                  data-cal-namespace="30min"
+                  data-cal-link="sandip-samanta-m7zs9y/30min"
+                  data-cal-config='{"layout":"month_view"}'
                   data-border="rounded"
                   variant="secondary"
                   icon="chevronRight"
@@ -266,18 +284,30 @@ export default function About() {
               <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
                 {about.studies.title}
               </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
-                {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
-                  </Column>
-                ))}
-              </Column>
+              <Timeline
+                items={about.studies.institutions.map((institution, index) => ({
+                  state: index === 0 ? ("active" as const) : ("default" as const),
+                  marker: <Icon name={index === 0 ? "book" : "calendar"} size="xs" />,
+                  children: (
+                    <Column fillWidth gap="4">
+                      <Row fillWidth horizontal="between" vertical="center">
+                        <Text id={institution.name} variant="heading-strong-l">
+                          {institution.name}
+                        </Text>
+                        {institution.timeframe && (
+                          <Text variant="heading-default-xs" onBackground="neutral-weak">
+                            {institution.timeframe}
+                          </Text>
+                        )}
+                      </Row>
+                      <Text variant="body-default-m" onBackground="neutral-weak">
+                        {institution.description}
+                      </Text>
+                    </Column>
+                  ),
+                }))}
+                marginBottom="40"
+              />
             </>
           )}
 
@@ -335,8 +365,19 @@ export default function About() {
               </Column>
             </>
           )}
-        </Column>
+        </RevealFx>
       </Row>
+      <Script
+        id="cal-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+            Cal("init", "30min", {origin:"https://app.cal.com"});
+            Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+          `,
+        }}
+      />
     </Column>
   );
 }

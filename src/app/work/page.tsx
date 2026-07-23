@@ -1,6 +1,6 @@
 import { Projects } from "@/components/work/Projects";
 import { about, baseURL, person, work } from "@/resources";
-import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
+import { Column, Heading, Meta, RevealFx, Schema } from "@once-ui-system/core";
 
 export const revalidate = 60;
 
@@ -30,10 +30,14 @@ export default function Work() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Heading marginBottom="l" variant="heading-strong-xl" align="center">
-        {work.title}
-      </Heading>
-      <Projects paginate />
+      <RevealFx translateY="4" fillWidth horizontal="center">
+        <Heading marginBottom="l" variant="heading-strong-xl" align="center">
+          {work.title}
+        </Heading>
+      </RevealFx>
+      <RevealFx translateY="8" delay={0.2} fillWidth>
+        <Projects paginate />
+      </RevealFx>
     </Column>
   );
 }
