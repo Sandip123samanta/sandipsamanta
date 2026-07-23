@@ -1,6 +1,7 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type React from "react";
 import type { ReactNode } from "react";
+import remarkGfm from "remark-gfm";
 import { slugify as transliterate } from "transliteration";
 
 import {
@@ -207,14 +208,93 @@ const components = {
 
 type CustomMDXProps = MDXRemoteProps & {
   components?: typeof components;
+  images?: string[];
 };
 
-export function CustomMDX(props: CustomMDXProps) {
+export function CustomMDX({ images, ...props }: CustomMDXProps) {
+  const tableComponents = {
+    table: ({ children }: any) => (
+      <Column fillWidth overflowX="auto" border="neutral-alpha-medium" radius="m" marginY="16">
+        <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+          {children}
+        </table>
+      </Column>
+    ),
+    thead: ({ children }: any) => (
+      <thead
+        style={{
+          backgroundColor: "var(--neutral-alpha-weak)",
+          borderBottom: "1px solid var(--neutral-alpha-medium)",
+        }}
+      >
+        {children}
+      </thead>
+    ),
+    tbody: ({ children }: any) => <tbody>{children}</tbody>,
+    tr: ({ children }: any) => (
+      <tr style={{ borderBottom: "1px solid var(--neutral-alpha-weak)" }}>{children}</tr>
+    ),
+    th: ({ children }: any) => (
+      <th
+        style={{
+          padding: "12px 16px",
+          fontWeight: "600",
+          fontSize: "var(--font-size-label-medium)",
+          color: "var(--neutral-strong)",
+        }}
+      >
+        {children}
+      </th>
+    ),
+    td: ({ children }: any) => (
+      <td
+        style={{
+          padding: "12px 16px",
+          fontSize: "var(--font-size-body-medium)",
+          color: "var(--neutral-medium)",
+        }}
+      >
+        {children}
+      </td>
+    ),
+  };
+
+  const imageComponents = {
+    img: (imgProps: any) => {
+      let src = imgProps.src;
+      const index = Number.parseInt(src, 10);
+      if (!Number.isNaN(index) && images && images[index]) {
+        src = images[index];
+      }
+      return createImage({ ...imgProps, src });
+    },
+    SanityImage: ({ index, ...sanityProps }: { index: number; [key: string]: any }) => {
+      const src = images?.[index] ? images[index] : "";
+      return createImage({ ...sanityProps, src });
+    },
+    Image: ({ index, ...imageProps }: { index: number; [key: string]: any }) => {
+      const src = images?.[index] ? images[index] : "";
+      return createImage({ ...imageProps, src });
+    },
+  };
+
+  const mergedComponents = {
+    ...components,
+    ...tableComponents,
+    ...imageComponents,
+    ...(props.components || {}),
+  };
+
   return (
     <MDXRemote
-      options={{ blockJS: false }}
       {...props}
-      components={{ ...components, ...(props.components || {}) }}
+      options={{
+        blockJS: false,
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+        },
+      }}
+      components={mergedComponents}
     />
   );
 }

@@ -18,6 +18,7 @@
     "@sanity/vision": "^6.5.0",
     "classnames": "^2.5.1",
     "cookie": "^1.0.2",
+    "easymde": "^2.21.0",
     "gray-matter": "^4.0.3",
     "lint-staged": "^16.1.5",
     "next": "^16.0.10",
@@ -26,7 +27,9 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
+    "remark-gfm": "^4.0.1",
     "sanity": "^6.5.0",
+    "sanity-plugin-markdown": "^9.0.8",
     "sass": "^1.86.3",
     "transliteration": "^2.3.5"
   },

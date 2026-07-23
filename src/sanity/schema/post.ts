@@ -43,6 +43,19 @@ export const post = defineType({
       description: "Upload a cover image for this blog post.",
     }),
     defineField({
+      name: "images",
+      title: "Blog Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
+      description:
+        "Upload images to use in the blog post body. You can reference them by index (e.g. <Image index={0} /> or ![Alt text](0)).",
+    }),
+    defineField({
       name: "tag",
       title: "Tag",
       type: "string",
@@ -50,7 +63,7 @@ export const post = defineType({
     defineField({
       name: "content",
       title: "Content (Markdown/MDX)",
-      type: "text",
+      type: "markdown",
       description: "Write your post content in Markdown/MDX format.",
       validation: (Rule) => Rule.required(),
     }),

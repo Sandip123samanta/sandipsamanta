@@ -27,6 +27,7 @@ type Metadata = {
   tag?: string;
   team: Team[];
   link?: string;
+  github?: string;
 };
 
 export type PostItem = {
@@ -97,7 +98,9 @@ export async function getSanityPosts(): Promise<PostItem[]> {
           publishedAt: post.publishedAt,
           summary: post.summary,
           image: post.image || "",
-          images: [],
+          images: post.images
+            ? post.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
+            : [],
           tag: post.tag || "",
           team: [],
           link: "",
@@ -121,13 +124,13 @@ export async function getSanityProjects(): Promise<PostItem[]> {
           title: project.title,
           publishedAt: project.publishedAt,
           summary: project.summary,
-          image: project.image || "",
           images: project.images
             ? project.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
             : [],
           tag: "",
           team: project.team || [],
           link: project.link || "",
+          github: project.github || "",
         },
       }));
     }
@@ -149,7 +152,9 @@ export async function getSanityPost(slug: string): Promise<PostItem | undefined>
           publishedAt: post.publishedAt,
           summary: post.summary,
           image: post.image || "",
-          images: [],
+          images: post.images
+            ? post.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
+            : [],
           tag: post.tag || "",
           team: [],
           link: "",
@@ -173,13 +178,13 @@ export async function getSanityProject(slug: string): Promise<PostItem | undefin
           title: project.title,
           publishedAt: project.publishedAt,
           summary: project.summary,
-          image: project.image || "",
           images: project.images
             ? project.images.map((img: any) => (typeof img === "string" ? img : img?.url || ""))
             : [],
           tag: "",
           team: project.team || [],
           link: project.link || "",
+          github: project.github || "",
         },
       };
     }

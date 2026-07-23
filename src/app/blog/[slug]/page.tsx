@@ -133,7 +133,10 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
             />
           )}
           <Column as="article" maxWidth="s">
-            <CustomMDX source={post.content} />
+            <CustomMDX
+              source={post.content ? post.content.replace(/\\`/g, "`") : ""}
+              images={post.metadata.images}
+            />
           </Column>
 
           <ShareSection title={post.metadata.title} url={`${baseURL}${blog.path}/${post.slug}`} />

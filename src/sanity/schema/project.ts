@@ -33,15 +33,7 @@ export const project = defineType({
       type: "text",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "image",
-      title: "Cover Image",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-      description: "Upload a cover image for this project.",
-    }),
+
     defineField({
       name: "images",
       title: "Gallery Images",
@@ -57,6 +49,11 @@ export const project = defineType({
     defineField({
       name: "link",
       title: "External Link",
+      type: "url",
+    }),
+    defineField({
+      name: "github",
+      title: "GitHub Link",
       type: "url",
     }),
     defineField({
@@ -81,7 +78,7 @@ export const project = defineType({
       name: "content",
       title: "Content (Markdown/MDX)",
       type: "text",
-      validation: (Rule) => Rule.required(),
+      description: "Optional case study content for this project.",
     }),
   ],
 });
