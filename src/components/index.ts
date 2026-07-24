@@ -9,3 +9,4 @@ export { ScrollToHash } from "@/components/ScrollToHash";
 export { ThemeToggle } from "@/components/ThemeToggle";
 export { CustomMDX } from "@/components/mdx";
 export { ContactForm } from "@/components/contact/ContactForm";
+export { BlogSearchAndPagination } from "@/components/blog/BlogSearchAndPagination";

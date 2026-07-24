@@ -1,6 +1,6 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type React from "react";
-import type { ReactNode } from "react";
+import { type ReactNode, isValidElement } from "react";
 import remarkGfm from "remark-gfm";
 import { slugify as transliterate } from "transliteration";
 
@@ -79,8 +79,26 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
   );
 }
 
-function slugify(str: string): string {
-  const strWithAnd = str.replace(/&/g, " and "); // Replace & with 'and'
+function nodeToString(node: ReactNode): string {
+  if (node === null || node === undefined || typeof node === "boolean") {
+    return "";
+  }
+  if (typeof node === "string" || typeof node === "number") {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map(nodeToString).join("");
+  }
+  if (isValidElement(node)) {
+    return nodeToString((node.props as { children?: ReactNode }).children);
+  }
+  return "";
+}
+
+function slugify(str: ReactNode): string {
+  const text = typeof str === "string" ? str : nodeToString(str);
+  if (!text) return "";
+  const strWithAnd = text.replace(/&/g, " and "); // Replace & with 'and'
   return transliterate(strWithAnd, {
     lowercase: true,
     separator: "-", // Replace spaces with -
@@ -92,7 +110,7 @@ function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
     children,
     ...props
   }: Omit<React.ComponentProps<typeof HeadingLink>, "as" | "id">) => {
-    const slug = slugify(children as string);
+    const slug = slugify(children);
     return (
       <HeadingLink marginTop="24" marginBottom="12" as={as} id={slug} {...props}>
         {children}
@@ -123,14 +141,52 @@ function createInlineCode({ children }: { children: ReactNode }) {
   return <InlineCode>{children}</InlineCode>;
 }
 
+function getNormalizedLanguage(rawLang: string): { language: string; label: string } {
+  const cleanLang = rawLang.toLowerCase().trim();
+
+  // Mapping for plain text / non-highlighted languages (PrismJS has no prism-text component module)
+  const textLanguages = new Set(["text", "txt", "plaintext", "none", "plain", "code", "raw"]);
+  if (textLanguages.has(cleanLang)) {
+    return { language: "markup", label: "Text" };
+  }
+
+  // Common language aliases and label formatting
+  const languageAliases: Record<string, { language: string; label: string }> = {
+    js: { language: "javascript", label: "JavaScript" },
+    ts: { language: "typescript", label: "TypeScript" },
+    tsx: { language: "tsx", label: "TSX" },
+    jsx: { language: "jsx", label: "JSX" },
+    py: { language: "python", label: "Python" },
+    sh: { language: "bash", label: "Bash" },
+    bash: { language: "bash", label: "Bash" },
+    zsh: { language: "bash", label: "Zsh" },
+    yml: { language: "yaml", label: "YAML" },
+    yaml: { language: "yaml", label: "YAML" },
+    json: { language: "json", label: "JSON" },
+    html: { language: "markup", label: "HTML" },
+    xml: { language: "markup", label: "XML" },
+    css: { language: "css", label: "CSS" },
+    scss: { language: "scss", label: "SCSS" },
+    md: { language: "markdown", label: "Markdown" },
+    markdown: { language: "markdown", label: "Markdown" },
+  };
+
+  if (languageAliases[cleanLang]) {
+    return languageAliases[cleanLang];
+  }
+
+  const label = cleanLang.charAt(0).toUpperCase() + cleanLang.slice(1);
+  return { language: cleanLang, label };
+}
+
 function createCodeBlock(props: any) {
   // For pre tags that contain code blocks
   if (props.children?.props?.className) {
     const { className, children } = props.children.props;
 
     // Extract language from className (format: language-xxx)
-    const language = className.replace("language-", "");
-    const label = language.charAt(0).toUpperCase() + language.slice(1);
+    const rawLanguage = className.replace("language-", "");
+    const { language, label } = getNormalizedLanguage(rawLanguage);
 
     return (
       <CodeBlock

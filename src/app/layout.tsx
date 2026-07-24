@@ -18,13 +18,20 @@ import {
 } from "@once-ui-system/core";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const baseMeta = Meta.generate({
     title: home.title,
     description: home.description,
     baseURL: baseURL,
     path: home.path,
     image: home.image,
   });
+
+  return {
+    ...baseMeta,
+    verification: {
+      google: "nwybNa2KsH0VAb2IwtDA0Sg0wmmBwXHD0nZxAj6avJQ",
+    },
+  };
 }
 
 export default async function RootLayout({
@@ -47,6 +54,10 @@ export default async function RootLayout({
       )}
     >
       <head>
+        <meta
+          name="google-site-verification"
+          content="nwybNa2KsH0VAb2IwtDA0Sg0wmmBwXHD0nZxAj6avJQ"
+        />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{

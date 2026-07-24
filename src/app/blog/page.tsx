@@ -1,6 +1,7 @@
 import { Mailchimp } from "@/components";
-import { Posts } from "@/components/blog/Posts";
-import { baseURL, blog, newsletter, person } from "@/resources";
+import { BlogSearchAndPagination } from "@/components/blog/BlogSearchAndPagination";
+import { baseURL, blog, person } from "@/resources";
+import { getSanityPosts } from "@/utils/utils";
 import { Column, Heading, Meta, RevealFx, Schema } from "@once-ui-system/core";
 
 export const revalidate = 60;
@@ -15,9 +16,14 @@ export async function generateMetadata() {
   });
 }
 
-export default function Blog() {
+export default async function Blog() {
+  const allBlogs = await getSanityPosts();
+  const sortedBlogs = allBlogs.sort((a, b) => {
+    return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
+  });
+
   return (
-    <Column maxWidth="m" paddingTop="24">
+    <Column maxWidth="m" paddingTop="24" gap="32">
       <Schema
         as="blogPosting"
         baseURL={baseURL}
@@ -32,19 +38,14 @@ export default function Blog() {
         }}
       />
       <RevealFx translateY="4" fillWidth>
-        <Heading marginBottom="l" variant="heading-strong-xl" marginLeft="24">
+        <Heading marginBottom="m" variant="heading-strong-xl" marginLeft="24">
           {blog.title}
         </Heading>
       </RevealFx>
       <RevealFx translateY="8" delay={0.2} fillWidth>
         <Column fillWidth flex={1} gap="40">
-          <Posts range={[1, 1]} thumbnail />
-          <Posts range={[2, 3]} columns="2" thumbnail direction="column" />
+          <BlogSearchAndPagination posts={sortedBlogs} />
           <Mailchimp marginBottom="l" />
-          <Heading as="h2" variant="heading-strong-xl" marginLeft="l">
-            Earlier posts
-          </Heading>
-          <Posts range={[4]} columns="2" />
         </Column>
       </RevealFx>
     </Column>

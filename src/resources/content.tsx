@@ -35,8 +35,8 @@ const newsletter: Newsletter = {
   ),
   description: (
     <>
-      I design and develop responsive websites that combine thoughtful visuals, smooth interactions,
-      and reliable engineering.
+      I design and develop responsive web applications that combine thoughtful visuals, smooth
+      interactions, and reliable engineering.
     </>
   ),
 };
@@ -70,11 +70,11 @@ const social: Social = [
 
 const home: Home = {
   path: "/",
-  image: "/images/og/home.jpg",
+  image: "/images/og/og.png",
   label: "Home",
-  title: `${person.name}'s Portfolio`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building bridges between design and code</>,
+  title: `${person.name} — Full Stack Web Developer & Next.js Engineer`,
+  description: `Explore the portfolio of ${person.name}, a Full Stack Web Developer & Co-Founder at Wefik. Specializing in Next.js, React, TypeScript, and high-performance web applications.`,
+  headline: <>Building high-performance, modern web applications</>,
   featured: {
     display: true,
     title: (
@@ -90,9 +90,10 @@ const home: Home = {
     <>
       I'm {person.firstName}, a{" "}
       <Text as="span" size="xl" weight="strong">
-        {person.role.toLowerCase()}
+        full stack web developer
       </Text>
-      , creating fast, responsive, and user-friendly websites
+      , crafting fast, responsive, and SEO-optimized web applications with Next.js, React, and
+      Sanity CMS.
     </>
   ),
 };
@@ -100,8 +101,8 @@ const home: Home = {
 const about: About = {
   path: "/about",
   label: "About",
-  title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  title: `About - ${person.name}`,
+  description: `Learn more about ${person.name}, Full Stack Web Developer and Co-Founder at Wefik based in Kolkata, India. Experienced in Next.js, React, Java, and modern web architectures.`,
   tableOfContent: {
     display: true,
     subItems: false,
@@ -118,10 +119,10 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        I'm {person.location.split("/")[1]?.replace("_", " ")}-based {person.role.toLowerCase()}{" "}
-        with a passion for transforming complex challenges into simple, elegant design solutions. My
-        work spans digital interfaces, interactive experiences, and the convergence of design and
-        technology.
+        I'm a Kolkata-based full stack web developer and Co-Founder at Wefik with a passion for
+        building fast, accessible, and high-performance web applications using Next.js, React,
+        TypeScript, and Sanity CMS. My work spans digital interfaces, full-stack architectures, and
+        modern web experiences.
       </>
     ),
   },
@@ -283,28 +284,22 @@ const about: About = {
 const blog: Blog = {
   path: "/blog",
   label: "Blog",
-  title: "Writing about design and tech...",
-  description: `Read what ${person.name} has been up to recently`,
-  // Create new blog posts by adding a new .mdx file to app/blog/posts
-  // All posts will be listed on the /blog route
+  title: "Tech Blog — Web Architecture, Next.js & React Insights",
+  description: `Read technical articles, guides, and engineering insights written by ${person.name} on Next.js, React, JavaScript, and web architecture.`,
 };
 
 const work: Work = {
   path: "/work",
   label: "Work",
-  title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
-  // Create new project pages by adding a new .mdx file to app/blog/posts
-  // All projects will be listed on the /home and /work routes
+  title: `Featured Projects & Engineering Work — ${person.name}`,
+  description: `Explore full-stack web applications, custom interactive websites, and digital experiences developed by ${person.name}.`,
 };
 
 const gallery: Gallery = {
   path: "/gallery",
   label: "Gallery",
-  title: `Photo gallery – ${person.name}`,
-  description: `A photo collection by ${person.name}`,
-  // Images by https://lorant.one
-  // These are placeholder images, replace with your own
+  title: `Visual Gallery — ${person.name}`,
+  description: `A curated collection of visual designs, photography, and creative media by ${person.name}.`,
   images: [
     {
       src: "/images/gallery/horizontal-1.jpg",
@@ -352,8 +347,8 @@ const gallery: Gallery = {
 const contact: Contact = {
   path: "/contact",
   label: "Contact",
-  title: `Contact – ${person.name}`,
-  description: `Get in touch with ${person.name}`,
+  title: `Contact ${person.name} — Hire Full Stack Web Developer`,
+  description: `Get in touch with ${person.name} for web development projects, technical consultation, and custom software engineering.`,
 };
 
 export { person, social, newsletter, home, about, blog, work, gallery, contact };

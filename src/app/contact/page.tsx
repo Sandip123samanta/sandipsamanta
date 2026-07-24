@@ -101,7 +101,9 @@ export default function ContactPage() {
         </Column>
       </RevealFx>
 
-      <Line />
+      <RevealFx translateY="4" delay={0.1} fillWidth>
+        <Line />
+      </RevealFx>
 
       {/* ── Two-column body ── */}
       <RevealFx translateY="8" delay={0.15} fillWidth>

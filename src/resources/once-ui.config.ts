@@ -14,14 +14,14 @@ import type {
 import { home, person, social } from "./content";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+const baseURL: string = "https://sandipsamanta.vercel.app";
 
 const routes: RoutesConfig = {
   "/": true,
   "/about": true,
   "/work": true,
   "/blog": true,
-  "/gallery": false,
+  "/gallery": true,
   "/contact": true,
 };
 
@@ -33,9 +33,7 @@ const display: DisplayConfig = {
 
 // Enable password protection on selected routes
 // Set password in the .env file, refer to .env.example
-const protectedRoutes: ProtectedRoutesConfig = {
-  "/work/automate-design-handovers-with-a-figma-to-code-pipeline": true,
-};
+const protectedRoutes: ProtectedRoutesConfig = {};
 
 // Import and set font for each variant
 import { Geist } from "next/font/google";
@@ -196,9 +194,9 @@ const schema: SchemaConfig = {
 
 // social links — derived from the social array in content.tsx to avoid duplication
 const sameAs: SameAsConfig = {
-  threads: social.find((s) => s.name === "Threads")?.link ?? "",
+  github: social.find((s) => s.name === "GitHub")?.link ?? "",
   linkedin: social.find((s) => s.name === "LinkedIn")?.link ?? "",
-  discord: social.find((s) => s.name === "Discord")?.link ?? "",
+  instagram: social.find((s) => s.name === "Instagram")?.link ?? "",
 };
 
 // social sharing configuration for blog posts

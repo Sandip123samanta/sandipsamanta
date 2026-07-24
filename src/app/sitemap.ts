@@ -1,15 +1,25 @@
 import { baseURL, routes as routesConfig } from "@/resources";
-import { getPosts } from "@/utils/utils";
+import { getPosts, getSanityPosts, getSanityProjects } from "@/utils/utils";
 
 export default async function sitemap() {
-  const blogs = getPosts(["src", "app", "blog", "posts"]).map((post) => ({
+  let rawBlogs = await getSanityPosts();
+  if (!rawBlogs.length) {
+    rawBlogs = getPosts(["src", "app", "blog", "posts"]);
+  }
+
+  let rawWorks = await getSanityProjects();
+  if (!rawWorks.length) {
+    rawWorks = getPosts(["src", "app", "work", "projects"]);
+  }
+
+  const blogs = rawBlogs.map((post) => ({
     url: `${baseURL}/blog/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
+    lastModified: post.metadata.publishedAt || new Date().toISOString().split("T")[0],
   }));
 
-  const works = getPosts(["src", "app", "work", "projects"]).map((post) => ({
+  const works = rawWorks.map((post) => ({
     url: `${baseURL}/work/${post.slug}`,
-    lastModified: post.metadata.publishedAt,
+    lastModified: post.metadata.publishedAt || new Date().toISOString().split("T")[0],
   }));
 
   const activeRoutes = Object.keys(routesConfig).filter(

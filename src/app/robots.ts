@@ -5,6 +5,15 @@ export default function robots() {
     rules: [
       {
         userAgent: "*",
+        allow: "/",
+      },
+      {
+        userAgent: "GPTBot",
+        allow: "/",
+      },
+      {
+        userAgent: "ChatGPT-User",
+        allow: "/",
       },
     ],
     sitemap: `${baseURL}/sitemap.xml`,

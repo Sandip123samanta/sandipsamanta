@@ -5,7 +5,10 @@ import {
   HiArrowTopRightOnSquare,
   HiArrowUpRight,
   HiCalendarDays,
+  HiChevronLeft,
+  HiChevronRight,
   HiEnvelope,
+  HiMagnifyingGlass,
   HiOutlineDocument,
   HiOutlineEye,
   HiOutlineEyeSlash,
@@ -13,6 +16,7 @@ import {
   HiOutlineLink,
   HiOutlineRocketLaunch,
   HiPhone,
+  HiXMark,
 } from "react-icons/hi2";
 
 import {
@@ -52,6 +56,10 @@ import {
 } from "react-icons/fa6";
 
 export const iconLibrary: Record<string, IconType> = {
+  search: HiMagnifyingGlass,
+  close: HiXMark,
+  chevronLeft: HiChevronLeft,
+  chevronRight: HiChevronRight,
   arrowUpRight: HiArrowUpRight,
   arrowRight: HiArrowRight,
   email: HiEnvelope,
