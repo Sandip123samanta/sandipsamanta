@@ -51,7 +51,7 @@ const social: Social = [
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/in/sandip-samanta2002/",
+    link: "https://www.linkedin.com/in/sandipsamanta2002/",
     essential: true,
   },
   {
@@ -92,8 +92,7 @@ const home: Home = {
       <Text as="span" size="xl" weight="strong">
         full stack web developer
       </Text>
-      , crafting fast, responsive, and SEO-optimized web applications with Next.js, React, and
-      Sanity CMS.
+      , crafting fast, responsive, and SEO-optimized web applications.
     </>
   ),
 };
@@ -119,10 +118,10 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        I'm a Kolkata-based full stack web developer and Co-Founder at Wefik with a passion for
-        building fast, accessible, and high-performance web applications using Next.js, React,
-        TypeScript, and Sanity CMS. My work spans digital interfaces, full-stack architectures, and
-        modern web experiences.
+        I'm a Kolkata-based Full-Stack Web Developer and Co-Founder of Wefik, passionate about
+        building fast, accessible, and high-performance web applications. I work with technologies
+        such as Next.js, React and TypeScript to create responsive digital interfaces, scalable
+        full-stack architectures, and modern web experiences.
       </>
     ),
   },
@@ -132,7 +131,7 @@ const about: About = {
     experiences: [
       {
         company: "Wefik",
-        timeframe: "2025 – Present",
+        timeframe: "2025 - Present",
         role: "Co-Founder & Full-Stack Developer",
         achievements: [
           "Co-founded Wefik, a creative web development studio delivering distinctive and responsive digital experiences for businesses, institutions, and events.",

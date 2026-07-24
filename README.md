@@ -123,7 +123,7 @@ npm install -g pnpm
 - **Role**: Co-Founder & Full-Stack Developer at [Wefik](https://wefik.in)
 - **Website**: [sandipsamanta.vercel.app](https://sandipsamanta.vercel.app/)
 - **GitHub**: [@Sandip123samanta](https://github.com/Sandip123samanta)
-- **LinkedIn**: [Sandip Samanta](https://www.linkedin.com/in/sandip-samanta2002/)
+- **LinkedIn**: [Sandip Samanta](https://www.linkedin.com/in/sandipsamanta2002/)
 - **Instagram**: [@samanta_sandip_](https://www.instagram.com/samanta_sandip_/)
 - **Email**: [samanthasandip565@gmail.com](mailto:samanthasandip565@gmail.com)
 
